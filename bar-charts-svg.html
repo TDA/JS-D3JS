@@ -7,6 +7,15 @@
         .bar-chart-svg rect {
             fill: rgba(10, 44, 216, 0.8)
         }
+        .bar-chart-svg rect {
+
+        }
+        .bar-chart-svg text {
+            fill: black;
+            font: 12px sans-serif;
+            text-anchor: end;
+            transform: rotate(-0deg);
+        }
     </style>
 </head>
 <body>
@@ -51,25 +60,39 @@
             .range([0, 1000]);
 
 
-        var a = d3.select(".bar-chart-svg")
+        var chart = d3.select(".bar-chart-svg")
                 .append("svg")
                 .attr({
                     "width": 1000,
                     "height": 1000
+                });
+
+        var groups = chart.selectAll("g")
+                        .data(eachObj)
+                        .enter()
+                            .append("g");
+
+    var rects = groups.append("rect")
+                .attr({
+                    "width": 18
                 })
-                .selectAll("rect")
-                    .data(eachObj)
-                .enter()
-                .append("rect")
-                    .attr({
-                        "width": 20
-                    })
-                    .style("height", function(d, i) {
-                        return x(d.loc);
-                        })
-                    .attr("x", function(d, i) {
-                        return i * 20;
-                    });
+                .attr("height", function(d, i) {
+                    return x(d.loc);
+                })// set x to multiples of 20, and y to the baseline by subtracting 'height' from 1000
+                .attr("transform", function(d, i) {
+                    return "translate(" + (i * 20) + "," + parseInt(1000 - x(d.loc)) + ")";
+                });
+
+    var texts = groups.append("text")
+                .attr("x", function(d, i) {
+                    return 10 + i * 20;
+                })
+                .attr("y", function(d,i) {
+                    return 10 + parseInt(1000 - x(d.loc));
+                })
+                .text(function(d) {
+                    return d.language;
+                });
 </script>
 </body>
 </html>
