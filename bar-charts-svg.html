@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <title>Bar Charts SVG eg</title>
     <style>
+        .bar-chart-svg rect {
+            fill: rgba(10, 44, 216, 0.8)
+        }
     </style>
 </head>
 <body>
@@ -44,28 +47,29 @@
     var data = [1, 2, 3, 4, 5];
 
     var x = d3.scale.linear()
-            .domain([0, d3.max(data)])
-            .range([0, 420]);
+            .domain([0, 481139])
+            .range([0, 1000]);
 
 
-    //    var a = d3.select("body").append("svg")
-    //            .attr({
-    //                "width": 1000,
-    //                "height": 1000
-    //            })
-    //            .selectAll("a")
-    //            .data(eachObj)
-    //            .enter()
-    //            .append("rect")
-    //            .attr(function(d, i) {
-    //                return {
-    //                    "width": 20,
-    //                    "height": 60,
-    //                    "position": "static",
-    //                    "x": i * 20
-    //                }
-    //            });
-
+        var a = d3.select(".bar-chart-svg")
+                .append("svg")
+                .attr({
+                    "width": 1000,
+                    "height": 1000
+                })
+                .selectAll("rect")
+                    .data(eachObj)
+                .enter()
+                .append("rect")
+                    .attr({
+                        "width": 20
+                    })
+                    .style("height", function(d, i) {
+                        return x(d.loc);
+                        })
+                    .attr("x", function(d, i) {
+                        return i * 20;
+                    });
 </script>
 </body>
 </html>
