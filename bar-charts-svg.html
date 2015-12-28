@@ -4,17 +4,23 @@
     <meta charset="UTF-8">
     <title>Bar Charts SVG eg</title>
     <style>
+        * {
+            box-sizing: border-box !important;
+        }
+
+        .bar-chart-svg {
+            //transform: rotate(90deg) translate(300px, 150px);
+        }
         .bar-chart-svg rect {
             fill: rgba(10, 44, 216, 0.8)
         }
-        .bar-chart-svg rect {
-
+        .bar-chart-svg g {
         }
         .bar-chart-svg text {
             fill: black;
             font: 12px sans-serif;
-            text-anchor: end;
-            transform: rotate(-0deg);
+            transform: rotate(-90deg);
+            transform-origin: left top;
         }
     </style>
 </head>
@@ -57,42 +63,44 @@
 
     var x = d3.scale.linear()
             .domain([0, 481139])
-            .range([0, 1000]);
+            .range([0, 600]);
 
 
         var chart = d3.select(".bar-chart-svg")
                 .append("svg")
                 .attr({
                     "width": 1000,
-                    "height": 1000
+                    "height": 600
                 });
 
         var groups = chart.selectAll("g")
                         .data(eachObj)
                         .enter()
-                            .append("g");
+                            .append("g")
+                        // set x to multiples of 20, and y to the baseline by subtracting 'height' from 1000
+                        .attr("transform", function(d, i) {
+                            return "translate(" + (i * 20) + "," + parseInt(600 - x(d.loc)) + ")";
+                        });
 
+    // create rects for the bars
     var rects = groups.append("rect")
                 .attr({
                     "width": 18
                 })
                 .attr("height", function(d, i) {
                     return x(d.loc);
-                })// set x to multiples of 20, and y to the baseline by subtracting 'height' from 1000
-                .attr("transform", function(d, i) {
-                    return "translate(" + (i * 20) + "," + parseInt(1000 - x(d.loc)) + ")";
                 });
 
+    // create texts for the bars
     var texts = groups.append("text")
+                // since rotated, x and y are interchanged
+                .attr("y", "1.1em")
+                // if the text goes out of screen, put it in
                 .attr("x", function(d, i) {
-                    return  36 + i * 20;
+                    return (600 - x(d.loc) <= 0) ? -120: 0;
                 })
-                .attr("y", function(d,i) {
-                    return Math.max(990 - parseInt(x(d.loc)), 0);
-                })
-
                 .text(function(d) {
-                    return d.language;
+                    return d.language + " - " + d.loc;
                 });
 </script>
 </body>
