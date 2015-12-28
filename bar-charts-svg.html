@@ -2,15 +2,12 @@
 <html>
 <head lang="en">
     <meta charset="UTF-8">
-    <title>Bar Charts eg</title>
+    <title>Bar Charts SVG eg</title>
     <style>
-        .bar-chart div {
-            background: rgba(10,44, 216, 0.8);
-        }
     </style>
 </head>
 <body>
-<div class="bar-chart">
+<div class="bar-chart-svg">
 
 </div>
 
@@ -50,12 +47,24 @@
             .domain([0, d3.max(data)])
             .range([0, 420]);
 
-    d3.select(".bar-chart")
-            .selectAll("div")
-                .data(data)
-            .enter().append("div")
-                .style("width", function(d) { return x(d) + "px"; })
-                .text(function(d) { return d; });
+
+    //    var a = d3.select("body").append("svg")
+    //            .attr({
+    //                "width": 1000,
+    //                "height": 1000
+    //            })
+    //            .selectAll("a")
+    //            .data(eachObj)
+    //            .enter()
+    //            .append("rect")
+    //            .attr(function(d, i) {
+    //                return {
+    //                    "width": 20,
+    //                    "height": 60,
+    //                    "position": "static",
+    //                    "x": i * 20
+    //                }
+    //            });
 
 </script>
 </body>
