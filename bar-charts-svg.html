@@ -85,11 +85,12 @@
 
     var texts = groups.append("text")
                 .attr("x", function(d, i) {
-                    return 10 + i * 20;
+                    return  36 + i * 20;
                 })
                 .attr("y", function(d,i) {
-                    return 10 + parseInt(1000 - x(d.loc));
+                    return Math.max(990 - parseInt(x(d.loc)), 0);
                 })
+
                 .text(function(d) {
                     return d.language;
                 });
