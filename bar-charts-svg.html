@@ -4,17 +4,12 @@
     <meta charset="UTF-8">
     <title>Bar Charts SVG eg</title>
     <style>
-        * {
-            box-sizing: border-box !important;
-        }
 
         .bar-chart-svg {
-            //transform: rotate(90deg) translate(300px, 150px);
+            transform: translate(100px, 0px);
         }
         .bar-chart-svg rect {
             fill: rgba(10, 44, 216, 0.8)
-        }
-        .bar-chart-svg g {
         }
         .bar-chart-svg text {
             fill: black;
@@ -63,14 +58,14 @@
 
     var x = d3.scale.linear()
             .domain([0, 481139])
-            .range([0, 600]);
+            .range([0, 500]);
 
 
         var chart = d3.select(".bar-chart-svg")
                 .append("svg")
                 .attr({
                     "width": 1000,
-                    "height": 600
+                    "height": 500
                 });
 
         var groups = chart.selectAll("g")
@@ -79,7 +74,7 @@
                             .append("g")
                         // set x to multiples of 20, and y to the baseline by subtracting 'height' from 1000
                         .attr("transform", function(d, i) {
-                            return "translate(" + (i * 20) + "," + parseInt(600 - x(d.loc)) + ")";
+                            return "translate(" + (i * 20) + "," + parseInt(500 - x(d.loc)) + ")";
                         });
 
     // create rects for the bars
@@ -97,7 +92,7 @@
                 .attr("y", "1.1em")
                 // if the text goes out of screen, put it in
                 .attr("x", function(d, i) {
-                    return (600 - x(d.loc) <= 0) ? -120: 0;
+                    return (500 - x(d.loc) <= 0) ? -120: 0;
                 })
                 .text(function(d) {
                     return d.language + " - " + d.loc;
